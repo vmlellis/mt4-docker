@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -e
+
+IMAGE="vmlellis/mt4-base:0.0.2"
+
+docker run --rm -it \
+           -v $(pwd)/MetaTrader\ 4:/home/xclient/.wine32/drive_c/Program\ Files\ \(x86\)/MetaTrader\ 4 \
+           -v /tmp/.X11-unix \
+           -e UID=$(id -u) \
+           -e GID=$(id -g) \
+           -e DISPLAY=$DISPLAY \
+           -v $XAUTHORITY:/home/ubuntu/.Xauthority \
+           --net=host \
+           --privileged \
+           $IMAGE \
+           sh mt4.sh
